@@ -8,8 +8,8 @@
         <h4>Let me know what's on your mind!</h4>
         <br /><br />
         <p>
-          Right now, I'm working on FretTime Phase 2, so I'd love to hear about
-          that - comments, improvements, bugs, etc... or, you can just say,
+          Right now, I'm working on FretTime, so I'd love to hear what you think
+          about it - comments, improvements, bugs, etc... or, you can just say,
           "Hi!""
         </p>
 
@@ -30,7 +30,8 @@
               name="name"
               class="form-input"
               placeholder="John Doe"
-              type="text" />
+              type="text"
+              required />
           </div>
           <div class="mb-6">
             <label for="email" class="form-label">
@@ -41,7 +42,8 @@
               name="email"
               class="form-input"
               placeholder="john.doe@email.com"
-              type="email" />
+              type="email"
+              required />
           </div>
           <div class="mb-6">
             <label for="message" class="form-label">
@@ -52,7 +54,8 @@
               name="message"
               class="form-input"
               placeholder="What's on your mind?"
-              rows="8"></textarea>
+              rows="8"
+              required></textarea>
           </div>
           <input type="hidden" name="form-name" value="contact" />
           <button type="submit" class="btn btn-primary">Submit</button>
