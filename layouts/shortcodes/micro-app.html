@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enhanced SVG Fret Chart with Drag & Resize</title>
+    <style>
+      /**
+        * https://piktochart.com/tips/black-gray-color-palette
+        * gray color pallete
+        * #1C1C1C - Dark Gray
+        * #4B4B4B - Medium Gray
+        * #7D7D7D - Light Gray
+        * #A9A9A9 - Lighter Gray
+        * #F0F0F0 - Almost White
+        */
+
+      body {
+        /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+          sans-serif;
+        padding: 20px;
+        background: #f8f9fa;
+        margin: 0;
+        line-height: 1.6; */
+      }
+      .container {
+        /* max-width: 650px; */
+        /* margin: 0 auto; */
+        position: relative;
+        text-align: center;
+
+        padding: 30px;
+        border: 1px solid #1c1c1c;
+        border-radius: 12px;
+        background: rgb(255, 255, 255);
+        /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07), 0 1px 3px rgba(0, 0, 0, 0.1); */
+      }
+      .container h2 {
+        color: #1c1c1c;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+      .container p {
+        color: #6c757d;
+        margin-bottom: 25px;
+      }
+      .container ul {
+        font-size: smaller;
+        color: #1c1c1c;
+        margin: 20px;
+      }
+
+      /* Widget container with drag and resize capabilities */
+      .widget-container {
+        position: relative;
+        text-align: center;
+        display: inline-block;
+        margin: 20px auto;
+        background: #fefefe;
+        border: 2px solid #1c1c1c;
+        border-radius: 8px;
+        cursor: move;
+        user-select: none;
+        min-width: 300px;
+        min-height: 200px;
+        max-width: 800px;
+        max-height: 600px;
+      }
+
+      .widget-container:hover {
+        /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); */
+      }
+
+      .widget-container.dragging {
+        opacity: 0.8;
+        transform: rotate(2deg);
+        z-index: 1000;
+      }
+
+      /* Resize handles */
+      .resize-handle {
+        position: absolute;
+        background: #3498db;
+        border: 2px solid white;
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        z-index: 10;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+
+      .widget-container:hover .resize-handle {
+        opacity: 1;
+      }
+
+      .resize-handle:hover {
+        background: #2980b9;
+        transform: scale(1.2);
+      }
+
+      .resize-se {
+        bottom: -6px;
+        right: -6px;
+        cursor: se-resize;
+      }
+
+      .resize-sw {
+        bottom: -6px;
+        left: -6px;
+        cursor: sw-resize;
+      }
+
+      .resize-ne {
+        top: -6px;
+        right: -6px;
+        cursor: ne-resize;
+      }
+
+      .resize-nw {
+        top: -6px;
+        left: -6px;
+        cursor: nw-resize;
+      }
+
+      /* SVG should fill the container */
+      .fret-chart {
+        width: 100%;
+        height: 100%;
+        display: block;
+        transition: none; /* Remove transform transition during resize */
+      }
+
+      .click-zone {
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .click-zone:hover {
+        fill: rgba(52, 152, 219, 0.15);
+        stroke: rgba(52, 152, 219, 0.4);
+        stroke-width: 1;
+        rx: 4;
+      }
+      .controls {
+        margin-top: 25px;
+        text-align: center;
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .controls button {
+        background: #3498db;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 0;
+        font-size: 14px;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+      }
+      .controls button:hover {
+        background: #2980b9;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+      }
+      .controls button:active {
+        transform: translateY(0);
+      }
+      .info {
+        position: relative;
+        display: inline-block;
+        margin-top: 20px;
+        width: 200px;
+        padding: 12px;
+        background: #fff;
+        border-radius: 8px;
+        font-size: 14px;
+        border-left: 4px solid #3498db;
+        border-right: 4px solid #3498db;
+      }
+      .info strong {
+        color: #1c1c1c;
+      }
+
+      .info ul li {
+        margin: 8px 0;
+      }
+      #dotCount {
+        color: #3498db;
+        font-weight: 600;
+        font-size: 16px;
+      }
+      .fret-lines line:first-child {
+        stroke: #1c1c1c;
+      }
+      .fret-lines line:not(:first-child) {
+        stroke: #34495e;
+      }
+      .strings line {
+        stroke: #7f8c8d;
+        stroke-width: 1.5;
+      }
+      .fret-numbers text {
+        fill: #1c1c1c;
+        font-family: inherit;
+        font-weight: 500;
+      }
+      .dots circle {
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .dots circle:hover {
+        stroke-width: 2;
+      }
+
+      /* Drag indicator */
+      .drag-indicator {
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: rgba(52, 152, 219, 0.8);
+        color: white;
+        padding: 2px 8px;
+        border-radius: 10px;
+        font-size: 10px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+        pointer-events: none;
+      }
+
+      .widget-container:hover .drag-indicator {
+        opacity: 1;
+      }
+
+      @media (max-width: 500px) {
+        .container {
+          padding: 20px;
+          margin: 10px;
+          position: relative;
+          text-align: center;
+        }
+        .widget-container {
+          position: relative;
+          width: 100% !important;
+          position: relative !important;
+          left: 0 !important;
+          top: 0 !important;
+        }
+
+        .controls {
+          gap: 8px;
+        }
+        .controls button {
+          padding: 8px 14px;
+          font-size: 13px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- <h2>Interactive SVG Fret Chart Demo</h2>
+      <p>
+        Drag the widget to move it around. Use the corner handles to resize.
+        Click on fret intersections to add/remove dots.
+      </p> -->
+
+      <div class="widget-container" id="widgetContainer">
+        <div class="drag-indicator">Drag to move</div>
+
+        <!-- Resize handles -->
+        <div class="resize-handle resize-nw" data-direction="nw"></div>
+        <div class="resize-handle resize-ne" data-direction="ne"></div>
+        <div class="resize-handle resize-sw" data-direction="sw"></div>
+        <div class="resize-handle resize-se" data-direction="se"></div>
+
+        <svg
+          viewBox="0 0 400 220"
+          id="fretChart"
+          preserveAspectRatio="xMidYMid meet">
+          <g class="fret-lines">
+            <line
+              x1="50"
+              y1="40"
+              x2="50"
+              y2="180"
+              stroke="#1c1c1c"
+              stroke-width="3" />
+            <line
+              x1="100"
+              y1="40"
+              x2="100"
+              y2="180"
+              stroke="#34495e"
+              stroke-width="2" />
+            <line
+              x1="150"
+              y1="40"
+              x2="150"
+              y2="180"
+              stroke="#34495e"
+              stroke-width="2" />
+            <line
+              x1="200"
+              y1="40"
+              x2="200"
+              y2="180"
+              stroke="#34495e"
+              stroke-width="2" />
+            <line
+              x1="250"
+              y1="40"
+              x2="250"
+              y2="180"
+              stroke="#34495e"
+              stroke-width="2" />
+            <line
+              x1="300"
+              y1="40"
+              x2="300"
+              y2="180"
+              stroke="#34495e"
+              stroke-width="2" />
+          </g>
+
+          <!-- String lines (horizontal) - 6 strings for guitar -->
+          <g class="strings">
+            <line
+              x1="50"
+              y1="40"
+              x2="300"
+              y2="40"
+              stroke="#7f8c8d"
+              stroke-width="1.5" />
+            <line
+              x1="50"
+              y1="68"
+              x2="300"
+              y2="68"
+              stroke="#7f8c8d"
+              stroke-width="1.5" />
+            <line
+              x1="50"
+              y1="96"
+              x2="300"
+              y2="96"
+              stroke="#7f8c8d"
+              stroke-width="1.5" />
+            <line
+              x1="50"
+              y1="124"
+              x2="300"
+              y2="124"
+              stroke="#7f8c8d"
+              stroke-width="1.5" />
+            <line
+              x1="50"
+              y1="152"
+              x2="300"
+              y2="152"
+              stroke="#7f8c8d"
+              stroke-width="1.5" />
+            <line
+              x1="50"
+              y1="180"
+              x2="300"
+              y2="180"
+              stroke="#7f8c8d"
+              stroke-width="1.5" />
+          </g>
+
+          <!-- Fret numbers -->
+          <g class="fret-numbers">
+            <text
+              x="75"
+              y="200"
+              text-anchor="middle"
+              font-size="12"
+              fill="#1c1c1c"
+              font-weight="500">
+              1
+            </text>
+            <text
+              x="125"
+              y="200"
+              text-anchor="middle"
+              font-size="12"
+              fill="#1c1c1c"
+              font-weight="500">
+              2
+            </text>
+            <text
+              x="175"
+              y="200"
+              text-anchor="middle"
+              font-size="12"
+              fill="#1c1c1c"
+              font-weight="500">
+              3
+            </text>
+            <text
+              x="225"
+              y="200"
+              text-anchor="middle"
+              font-size="12"
+              fill="#1c1c1c"
+              font-weight="500">
+              4
+            </text>
+            <text
+              x="275"
+              y="200"
+              text-anchor="middle"
+              font-size="12"
+              fill="#1c1c1c"
+              font-weight="500">
+              5
+            </text>
+          </g>
+
+          <!-- Click zones at intersections -->
+          <g class="click-zones" id="clickZones"></g>
+
+          <!-- Dots container -->
+          <g class="dots" id="dotsContainer"></g>
+        </svg>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button onclick="clearAllDots()">Clear Dots</button>
+        <button onclick="showCMajorChord()">Show C Chord</button>
+        <button onclick="showGScale()">Show G Major Scale</button>
+        <!-- <button onclick="showDMinorChord()">Show D Minor</button> -->
+        <button onclick="resetWidget()">Reset Fret Chart</button>
+      </div>
+
+      <!-- Info -->
+      <div class="info">
+        <strong>Active dots:</strong> <span id="dotCount">0</span><br />
+        <strong>Widget size:</strong> <span id="widgetSize">400 × 220</span
+        ><br />
+        <strong>Widget position:</strong> <span id="widgetPosition">0, 0</span>
+      </div>
+    </div>
+
+    <script>
+      // Fret chart configuration
+      const FRETS = 5;
+      const STRINGS = 6;
+      const FRET_WIDTH = 50;
+      const STRING_HEIGHT = 28;
+      const START_X = 75; // Center of first fret
+      const START_Y = 40; // First string position
+      const DOT_STATES = {
+        OFF: "off",
+        NOFILL: "no-fill",
+        FILL: "fill",
+      };
+
+      // Store active dots
+      let activeDots = new Set();
+
+      // Widget drag and resize state
+      let dragState = {
+        isDragging: false,
+        isResizing: false,
+        startX: 0,
+        startY: 0,
+        startWidth: 0,
+        startHeight: 0,
+        startLeft: 0,
+        startTop: 0,
+        resizeDirection: null,
+      };
+
+      // Initialize drag and resize functionality
+      function initializeDragResize() {
+        const widget = document.getElementById("widgetContainer");
+        const resizeHandles = document.querySelectorAll(".resize-handle");
+
+        // Set initial position
+        widget.style.position = "relative";
+        widget.style.width = "400px";
+        widget.style.height = "220px";
+        widget.style.left = "0px";
+        widget.style.top = "0px";
+
+        // Drag functionality
+        widget.addEventListener("mousedown", startDrag);
+        document.addEventListener("mousemove", handleDragResize);
+        document.addEventListener("mouseup", endDragResize);
+
+        // Resize functionality
+        resizeHandles.forEach((handle) => {
+          handle.addEventListener("mousedown", startResize);
+        });
+
+        // Touch support for mobile
+        widget.addEventListener("touchstart", startDragTouch, {
+          passive: false,
+        });
+        document.addEventListener("touchmove", handleDragResizeTouch, {
+          passive: false,
+        });
+        document.addEventListener("touchend", endDragResize);
+      }
+
+      function startDrag(e) {
+        if (e.target.classList.contains("resize-handle")) return;
+        if (e.target.closest(".click-zone") || e.target.closest(".dots"))
+          return;
+
+        dragState.isDragging = true;
+        dragState.startX = e.clientX;
+        dragState.startY = e.clientY;
+
+        const widget = document.getElementById("widgetContainer");
+        const rect = widget.getBoundingClientRect();
+        dragState.startLeft = parseInt(widget.style.left) || 0;
+        dragState.startTop = parseInt(widget.style.top) || 0;
+
+        widget.classList.add("dragging");
+        e.preventDefault();
+      }
+
+      function startResize(e) {
+        dragState.isResizing = true;
+        dragState.resizeDirection = e.target.dataset.direction;
+        dragState.startX = e.clientX;
+        dragState.startY = e.clientY;
+
+        const widget = document.getElementById("widgetContainer");
+        const rect = widget.getBoundingClientRect();
+        dragState.startWidth = rect.width;
+        dragState.startHeight = rect.height;
+        dragState.startLeft = parseInt(widget.style.left) || 0;
+        dragState.startTop = parseInt(widget.style.top) || 0;
+
+        e.stopPropagation();
+        e.preventDefault();
+      }
+
+      function handleDragResize(e) {
+        if (dragState.isDragging) {
+          const deltaX = e.clientX - dragState.startX;
+          const deltaY = e.clientY - dragState.startY;
+
+          const widget = document.getElementById("widgetContainer");
+          widget.style.left = dragState.startLeft + deltaX + "px";
+          widget.style.top = dragState.startTop + deltaY + "px";
+
+          updateWidgetInfo();
+        } else if (dragState.isResizing) {
+          handleResize(e);
+        }
+      }
+
+      function handleResize(e) {
+        const deltaX = e.clientX - dragState.startX;
+        const deltaY = e.clientY - dragState.startY;
+        const widget = document.getElementById("widgetContainer");
+
+        let newWidth = dragState.startWidth;
+        let newHeight = dragState.startHeight;
+        let newLeft = dragState.startLeft;
+        let newTop = dragState.startTop;
+
+        switch (dragState.resizeDirection) {
+          case "se":
+            newWidth = Math.max(300, dragState.startWidth + deltaX);
+            newHeight = Math.max(200, dragState.startHeight + deltaY);
+            break;
+          case "sw":
+            newWidth = Math.max(300, dragState.startWidth - deltaX);
+            newHeight = Math.max(200, dragState.startHeight + deltaY);
+            newLeft = dragState.startLeft + deltaX;
+            if (newWidth === 300)
+              newLeft = dragState.startLeft + (dragState.startWidth - 300);
+            break;
+          case "ne":
+            newWidth = Math.max(300, dragState.startWidth + deltaX);
+            newHeight = Math.max(200, dragState.startHeight - deltaY);
+            newTop = dragState.startTop + deltaY;
+            if (newHeight === 200)
+              newTop = dragState.startTop + (dragState.startHeight - 200);
+            break;
+          case "nw":
+            newWidth = Math.max(300, dragState.startWidth - deltaX);
+            newHeight = Math.max(200, dragState.startHeight - deltaY);
+            newLeft = dragState.startLeft + deltaX;
+            newTop = dragState.startTop + deltaY;
+            if (newWidth === 300)
+              newLeft = dragState.startLeft + (dragState.startWidth - 300);
+            if (newHeight === 200)
+              newTop = dragState.startTop + (dragState.startHeight - 200);
+            break;
+        }
+
+        // Apply constraints
+        newWidth = Math.min(800, newWidth);
+        newHeight = Math.min(600, newHeight);
+
+        widget.style.width = newWidth + "px";
+        widget.style.height = newHeight + "px";
+        widget.style.left = newLeft + "px";
+        widget.style.top = newTop + "px";
+
+        updateWidgetInfo();
+      }
+
+      function endDragResize() {
+        const widget = document.getElementById("widgetContainer");
+        widget.classList.remove("dragging");
+
+        dragState.isDragging = false;
+        dragState.isResizing = false;
+        dragState.resizeDirection = null;
+      }
+
+      // Touch support
+      function startDragTouch(e) {
+        if (e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent("mousedown", {
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+        });
+        startDrag(mouseEvent);
+      }
+
+      function handleDragResizeTouch(e) {
+        if (e.touches.length !== 1) return;
+        e.preventDefault();
+        const touch = e.touches[0];
+        const mouseEvent = new MouseEvent("mousemove", {
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+        });
+        handleDragResize(mouseEvent);
+      }
+
+      function updateWidgetInfo() {
+        const widget = document.getElementById("widgetContainer");
+        const rect = widget.getBoundingClientRect();
+        const left = parseInt(widget.style.left) || 0;
+        const top = parseInt(widget.style.top) || 0;
+
+        document.getElementById("widgetSize").textContent = `${Math.round(
+          rect.width,
+        )} × ${Math.round(rect.height)}`;
+        document.getElementById("widgetPosition").textContent =
+          `${left}, ${top}`;
+      }
+
+      function resetWidget() {
+        const widget = document.getElementById("widgetContainer");
+        widget.style.width = "400px";
+        widget.style.height = "220px";
+        widget.style.left = "0px";
+        widget.style.top = "0px";
+        updateWidgetInfo();
+      }
+
+      // Generate click zones and add event listeners
+      function initializeClickZones() {
+        const clickZonesGroup = document.getElementById("clickZones");
+
+        for (let fret = 1; fret <= FRETS; fret++) {
+          for (let string = 0; string < STRINGS; string++) {
+            const x = START_X + (fret - 1) * FRET_WIDTH;
+            const y = START_Y + string * STRING_HEIGHT;
+
+            // Create invisible click zone with rounded corners
+            const rect = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "rect",
+            );
+            const dotState = DOT_STATES.OFF;
+
+            rect.setAttribute("id", `clickZone-${fret}-${string}`);
+            rect.setAttribute("x", x - 18);
+            rect.setAttribute("y", y - 14);
+            rect.setAttribute("width", "36");
+            rect.setAttribute("height", "28");
+            rect.setAttribute("fill", "transparent");
+            rect.setAttribute("class", "click-zone");
+            rect.setAttribute("data-fret", fret);
+            rect.setAttribute("data-string", string);
+            rect.setAttribute("rx", "4");
+            rect.setAttribute("data-dot-state", dotState);
+
+            rect.addEventListener("click", function (e) {
+              e.stopPropagation();
+              toggleDot(fret, string, dotState);
+            });
+
+            rect.addEventListener("mouseenter", function () {
+              this.style.cursor = "pointer";
+            });
+
+            clickZonesGroup.appendChild(rect);
+          }
+        }
+      }
+
+      // Toggle dot at specific fret/string intersection
+      function toggleDot(fret, string) {
+        const dotId = `${fret}-${string}`;
+
+        if (activeDots.has(dotId) && getDotState(dotId) === DOT_STATES.NOFILL) {
+          fillDot(dotId);
+        } else if (
+          activeDots.has(dotId) &&
+          getDotState(dotId) === DOT_STATES.FILL
+        ) {
+          removeDot(dotId);
+          activeDots.delete(dotId);
+        } else {
+          addDot(fret, string, dotId);
+          activeDots.add(dotId);
+        }
+
+        updateDotCount();
+      }
+
+      // Add visual dot with improved styling
+      function addDot(fret, string, dotId) {
+        const x = START_X + (fret - 1) * FRET_WIDTH;
+        const y = START_Y + string * STRING_HEIGHT;
+
+        const circle = document.createElementNS(
+          "http://www.w3.org/2000/svg",
+          "circle",
+        );
+        const dotState = DOT_STATES.NOFILL;
+        circle.setAttribute("id", dotId);
+        circle.setAttribute("cx", x);
+        circle.setAttribute("cy", y);
+        circle.setAttribute("r", "9");
+        circle.setAttribute("fill", "#00000000"); // transparent fill
+        circle.setAttribute("stroke", "#1c1c1c"); // Dark gray
+        circle.setAttribute("stroke-width", "1.5");
+        circle.setAttribute("id", `dot-${dotId}`);
+        circle.setAttribute("data-dot-state", dotState);
+
+        circle.addEventListener("click", function (e) {
+          e.stopPropagation();
+          toggleDot(fret, string);
+        });
+
+        // hide clickZone when dot is added
+        const clickZone = document.getElementById(
+          `clickZone-${fret}-${string}`,
+        );
+        if (clickZone) {
+          clickZone.classList.remove("click-zone");
+        }
+
+        // Add subtle shadow effect
+        // circle.style.filter = 'drop-shadow(0 1px 2px rgba(0,0,0,0.2))'
+
+        document.getElementById("dotsContainer").appendChild(circle);
+      }
+
+      // Fill visual dot with color
+      function fillDot(dotId) {
+        const dot = document.getElementById(`dot-${dotId}`);
+        dot.setAttribute("data-dot-state", DOT_STATES.FILL);
+        dot.setAttribute("fill", "#1c1c1c");
+      }
+
+      function getDotState(dotId) {
+        const dot = document.getElementById(`dot-${dotId}`);
+        return dot ? dot.getAttribute("data-dot-state") : DOT_STATES.OFF;
+      }
+
+      // Remove visual dot
+      function removeDot(dotId) {
+        const dot = document.getElementById(`dot-${dotId}`);
+        if (dot) {
+          // Add fade out animation
+          dot.style.transition = "opacity 0.2s ease";
+          dot.style.opacity = "0";
+          setTimeout(() => {
+            if (dot.parentNode) {
+              dot.remove();
+
+              // show clickZone when dot is removed
+              const clickZone = document.getElementById(`clickZone-${dotId}`);
+              if (clickZone) {
+                clickZone.classList.add("click-zone");
+              }
+            }
+          }, 200);
+        }
+      }
+
+      // Clear all dots with animation
+      function clearAllDots() {
+        const allDots = document.querySelectorAll("#dotsContainer circle");
+        allDots.forEach((dot, index) => {
+          setTimeout(() => {
+            dot.style.transition = "opacity 0.15s ease, transform 0.15s ease";
+            dot.style.opacity = "0";
+            dot.style.transform = "scale(0.5)";
+          }, index * 5);
+        });
+
+        setTimeout(
+          () => {
+            document.getElementById("dotsContainer").innerHTML = "";
+            activeDots.clear();
+            updateDotCount();
+          },
+          allDots.length * 50 + 150,
+        );
+      }
+
+      // Show C Major chord
+      function showCMajorChord() {
+        clearAllDots();
+        setTimeout(() => {
+          const cMajorPositions = [
+            [1, 1], // C on B string, 1st fret
+            [2, 3], // E on D string, 2nd fret
+            [3, 4], // G on A string, 3rd fret
+          ];
+
+          cMajorPositions.forEach(([fret, string], index) => {
+            setTimeout(() => {
+              const dotId = `${fret}-${string}`;
+              addDot(fret, string, dotId);
+              activeDots.add(dotId);
+              updateDotCount();
+            }, index * 200);
+          });
+        }, 300);
+      }
+
+      // Show D Minor chord
+      // function showDMinorChord() {
+      //   clearAllDots()
+      //   setTimeout(() => {
+      //     const dMinorPositions = [
+      //       [1, 0], // D on high E string, 1st fret
+      //       [2, 2], // A on G string, 2nd fret
+      //       [3, 1], // F on B string, 3rd fret
+      //     ]
+
+      //     dMinorPositions.forEach(([fret, string], index) => {
+      //       setTimeout(() => {
+      //         const dotId = `${fret}-${string}`
+      //         addDot(fret, string, dotId)
+      //         activeDots.add(dotId)
+      //         updateDotCount()
+      //       }, index * 200)
+      //     })
+      //   }, 300)
+      // }
+
+      // Show G Major scale pattern
+      function showGScale() {
+        clearAllDots();
+        setTimeout(() => {
+          const gScalePositions = [
+            [2, 0],
+            [3, 0],
+            [5, 0], // High E string
+            [3, 1],
+            [5, 1], // B string
+            [2, 2],
+            [4, 2],
+            [5, 2], // G string
+            [2, 3],
+            [4, 3],
+            [5, 3], // D string
+            [2, 4],
+            [3, 4],
+            [5, 4], // A string
+            [2, 5],
+            [3, 5],
+            [5, 5], // Low E string
+          ];
+
+          gScalePositions.forEach(([fret, string], index) => {
+            setTimeout(() => {
+              const dotId = `${fret}-${string}`;
+              addDot(fret, string, dotId);
+              activeDots.add(dotId);
+              updateDotCount();
+            }, index * 100);
+          });
+        }, 300);
+      }
+
+      // Update dot counter with animation
+      function updateDotCount() {
+        const countElement = document.getElementById("dotCount");
+        const newCount = activeDots.size;
+
+        // Add a subtle animation to the counter
+        countElement.style.transform = "scale(1.1)";
+        countElement.textContent = newCount;
+
+        setTimeout(() => {
+          countElement.style.transform = "scale(1)";
+        }, 150);
+      }
+
+      // Initialize everything
+      function initialize() {
+        initializeClickZones();
+        initializeDragResize();
+        updateWidgetInfo();
+      }
+
+      // Start the app
+      initialize();
+    </script>
+  </body>
+</html>

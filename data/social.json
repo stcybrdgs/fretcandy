@@ -1,0 +1,19 @@
+{
+  "main": [
+    {
+      "name": "twitter",
+      "icon": "fa-brands fa-x-twitter",
+      "link": "https://x.com/stcybrdgs"
+    },
+    {
+      "name": "linkedin",
+      "icon": "fa-brands fa-linkedin",
+      "link": "https://www.linkedin.com/in/stcybrdgs/"
+    },
+    {
+      "name": "github",
+      "icon": "fa-brands fa-github",
+      "link": "https://github.com/stcybrdgs"
+    }
+  ]
+}
