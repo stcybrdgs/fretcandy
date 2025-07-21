@@ -7,7 +7,7 @@ byline:
 # Banner
 banner:
   title: "Current Project: FretTime"
-  content: "FretTime is a productivity app that helps string players structure their practice sessions with task cards and built-in timers. Instead of scattered practice notes, you get a system designed around how musicians actually work – chunking techniques and tunes into focused daily tasks while tracking your progress. <br /><br />Right now, I'm in Phase 2, and I'm adding a global count-down timer, an analytics dashboard, drag & drop functionality, and some other good stuff."
+  content: "FretTime is a productivity app that helps string players structure their practice sessions with task cards and built-in timers. Instead of scattered practice notes, you get a system designed around how musicians actually work – so, you can chunk your techniques and tunes into focused daily tasks while tracking your progress. <br /><br />Right now, I'm in Phase 2, and I'm adding a global count-down timer, an analytics dashboard, drag & drop functionality, and some other good stuff."
   image: "/images/fret-candy-banner.png"
   button:
     enable: true
@@ -26,7 +26,7 @@ features:
 
   - title: "What's in Phase 2?"
     image: "/images/fret-time-whats-in-phase-2.png"
-    content: "FretTime Phase 2 transforms your practice sessions from simple task management into intelligent practice analytics and advanced workflow tools. Building on the solid foundation of Phase 1, these features can help musicians understand their practice patterns and optimize their development time. Phase 2 includes:"
+    content: "FretTime Phase 2 aims to transform your practice sessions from simple task management into intelligent practice analytics and advanced workflow tools. Building on Phase 1, these features can help musicians understand their practice patterns and optimize their development time. Phase 2 includes:"
     bulletpoints:
       - "Global focus timer for time-boxing practice sessions"
       - "Analytics dashboard with flexible reporting "
@@ -40,7 +40,7 @@ features:
 
   - title: "Why FretTime?"
     image: "/images/fret-charts-2.png"
-    content: "FretTime is a productivity app that helps string players structure their practice sessions with task cards and built-in timers. Instead of scattered practice notes and forgotten goals, you get a system designed around how musicians actually work – breaking techniques and tunes into focused daily tasks while tracking your progress. Whether you're preparing for a performance or developing your technical skills, this tool helps you practice more intentionally and less chaotically. Some key ways to take advantage of FretTime's features include:"
+    content: "Whether you're preparing for a performance or developing your technical skills, FretTime helps you practice more intentionally and less chaotically. Some key ways to take advantage of FretTime's features include:"
     bulletpoints:
       - "**Create individual task cards to break your primary projects and practice areas into manageable chunks** → Skip the overwhelming practice lists, and organize your work into focused sessions that build momentum"
       - "**Track time spent on each technique and song with built-in timers** → Monitor your practice habits and ensure you're giving adequate attention to every aspect of your development"

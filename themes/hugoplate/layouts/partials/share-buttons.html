@@ -312,9 +312,9 @@ background-color: #FF6600
     <!-- Sharingbutton Facebook -->
     <a
       class="resp-sharing-button__link"
-      href="https://www.facebook.com/sharer/sharer.php?u={{ $pageURL }}"
+      href="https://www.facebook.com/sharer/sharer.php?u=https://www.fretcandy.com{{ $pageURL }}"
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       aria-label=""
       title="Facebook">
       <div
@@ -359,9 +359,9 @@ background-color: #FF6600
     <!-- Sharingbutton Twitter -->
     <a
       class="resp-sharing-button__link"
-      href="https://twitter.com/intent/tweet/?text={{ $pageTitle }}&amp;url={{ $pageURL }}"
+      href="https://twitter.com/intent/tweet/?url=https://www.fretcandy.com{{ $pageURL }}&amp;text=Check out this post: {{ $pageTitle }}"
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       aria-label=""
       title="Twitter">
       <div
@@ -571,9 +571,9 @@ background-color: #FF6600
     <!-- href="https://www.linkedin.com/shareArticle?mini=true&amp;url={{ $pageURL }}&amp;title={{ $pageTitle }}&amp;summary={{ $pageTitle }}&amp;{{ $pageURL }}" -->
     <a
       class="resp-sharing-button__link"
-      href="https://www.linkedin.com/sharing/share-offsite/?url={{ $pageURL }}"
+      href="https://www.linkedin.com/sharing/share-offsite/?url=https://www.fretcandy.com{{ $pageURL }}"
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       aria-label="">
       <div
         class="resp-sharing-button resp-sharing-button--linkedin resp-sharing-button--{{ .Site.Params.ShareButtons.Size }}">

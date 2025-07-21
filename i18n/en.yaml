@@ -2,7 +2,7 @@ home: Home
 read_more: Read More
 send: Send
 related_posts: Related Posts
-categories: Categories
+# categories: Categories
 tags: Tags
 toc: Table of Contents
 share: Share

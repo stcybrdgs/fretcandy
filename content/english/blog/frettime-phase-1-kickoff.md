@@ -4,7 +4,7 @@ meta_title: ""
 description: "An article about the FretTime - Phase 1 kickoff."
 date: 2025-07-05T05:00:00Z
 image: "/images/kickoff.png"
-categories: ["Frettime", "Phase 1"]
+# categories: ["Frettime", "Phase 1"]
 author: "Stacy Bridges"
 tags: ["frettime", "kickoff", "phase 1", "todo app"]
 draft: false
@@ -16,19 +16,19 @@ disable_comments: true
 
 _July 5, 2025_
 
-## FretTime Officially Kicks Off
+## FretTime Officially Kicks Off ->
 
 Well, that escalated quickly...
 
-A month ago, I was convinced I was ready to dive straight into indie hacking with a custom fret charts app. Classic overconfidence from someone who's been out of the frontend game for too long. Reality check: my tech stack wasn't just stale – it was vintage.
+A month ago, I was convinced I was ready to dive straight into indie hacking with a custom fret charts app. Classic overconfidence from someone who's been out of the frontend game for a while. Reality check: my tech stack wasn't just stale – it was becoming vintage.
 
-So here I am with a plot twist that's actually a blessing in disguise. Instead of fumbling through an MVP with outdated tools, I'm going back to basics. Building a 'Todo' app to learn React, Next.js, TypeScript, and modern deployment workflows (and some AI stuff, maybe?). But not just _any_ todo app.
+So here I am with a plot twist that may be a blessing in disguise. Instead of fumbling through an MVP with outdated tools, I'm going back to basics -- building a 'Todo' app to learn React, Next.js, TypeScript, and modern deployment workflows (and some AI stuff, maybe?). But not just _any_ todo app.
 
 It's FretTime!
 
-> _FretTime is a productivity app that helps string players structure their practice sessions with task cards and built-in timers. Instead of scattered practice notes, you get a system designed around how musicians actually work – chunking techniques and tunes into focused daily tasks while tracking your progress._
+> _FretTime is a productivity app that helps string players structure their practice sessions with task cards and built-in timers. Instead of scattered practice notes, you get a system designed around how musicians actually work – so, you can chunk your techniques and tunes into focused daily tasks while tracking your progress._
 
-So, that's the vision. But, how do I get there?
+So, that's the vision. But, how to get there?
 
 ## Where We're At
 
@@ -36,11 +36,11 @@ So, that's the vision. But, how do I get there?
 
 **A Strategy Shift:** Instead of learning these tools in isolation or trying to fake my way through interviews, I'm building my way back. Every line of code documented, every struggle shared, every breakthrough celebrated in public.
 
-**A Secret Weapon:** AI pair programming with Claude Sonnet 4. I've never built with an AI coding partner before, but early experiments suggest this could be a game-changer for leveling up quickly.
+**A Secret Weapon:** I'm going to try AI pair programming with Claude Sonnet 4. I've never built with an AI coding partner before, but early experiments suggest this could be a game-changer for leveling up quickly. Let's go!
 
 ## Where We're Heading
 
-FretTime isn't just a learning exercise – it's the foundation for something bigger. The long-term vision includes:
+To me, **FretTime** isn't just a learning exercise – it's the foundation for something bigger. The long-term vision includes:
 
 - **Multi-platform deployment** (web, iOS, Android)
 - **Advanced practice analytics** (time tracking, progress visualization)
@@ -52,7 +52,7 @@ But first, let's prove the core concept works.
 
 ## Phase 1 Focus: The Essential Features
 
-Phase 1 will be all about nailing the fundamentals:
+**Phase 1** will be all about nailing the fundamentals:
 
 **Core Architecture:**
 
@@ -81,7 +81,7 @@ Phase 1 will be all about nailing the fundamentals:
 
 ## Timeline: From Zero to Go Live in 14 Days
 
-Here's the initial, ambitious plan for Phase 1:
+Here's my initial, ambitious plan for **Phase 1**:
 
 **Days 1-3: Foundation & Setup**
 
@@ -122,10 +122,8 @@ Here's the initial, ambitious plan for Phase 1:
 
 This isn't just about building an app – it's about reminding myself that I can still plan, execute, and deliver. That I can learn modern tools quickly. That I can ship quality code under pressure. That I can turn a career setback into a comeback story.
 
-Or, perhaps, it's more simple than all that. Perhaps it's simply about proving that I can still bring value to others through code, even if the career never comes back.
+Or, perhaps, it's more simple than all that. Perhaps it's simply about proving that I can still bring value to others through code, even if the career never comes back. (But, seriously, come on back, career).
 
 **Ready to build?** Follow along on X [@stcybrdgs] for regular updates, code snippets, fails, and weird ideas.
-
-Let's turn those scattered practice notes into something big!
 
 **_`Music + code, let’s go!`_** 🎸🚀

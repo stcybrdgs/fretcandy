@@ -31,29 +31,29 @@ name = "Authors"
 url = "/authors"
 weight = 1
 
-[[main]]
-parent = "Pages"
-name = "Categories"
-url = "/categories"
-weight = 2
+# [[main]]
+# parent = "Pages"
+# name = "Categories"
+# url = "/categories"
+# weight = 2
 
 [[main]]
 parent = "Pages"
 name = "Tags"
 url = "/tags"
-weight = 3
+weight = 2
 
 [[main]]
 parent = "Pages"
 name = "Contact"
 url = "/contact"
-weight = 4
+weight = 3
 
 [[main]]
 parent = "Pages"
 name = "Email List"
 url = "/email-list"
-weight = 5
+weight = 4
 
 # [[main]]
 # parent = "Pages"
