@@ -9,6 +9,7 @@ author: "Stacy Bridges"
 tags: ["frettime", "kickoff", "phase 2", "todo app"]
 draft: false
 share: true
+disable_comments: true
 ---
 
 # The FretTime Phase 2 Kickoff
