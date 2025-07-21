@@ -15,7 +15,11 @@
         <br /><br />
       </div>
       <div class="w-full">
-        <form action="{{ site.Params.contact_form_action }}" method="POST">
+        <form
+          action="{{ site.Params.contact_form_action }}"
+          method="POST"
+          name="email-list"
+          data-netlify="true">
           <div class="mb-6">
             <label for="name" class="form-label">
               Full Name <span class="text-red-500">*</span>
@@ -40,6 +44,7 @@
               type="email"
               required />
           </div>
+          <input type="hidden" name="form-name" value="email-list" />
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>

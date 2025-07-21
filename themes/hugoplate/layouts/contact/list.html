@@ -16,7 +16,11 @@
         <br /><br />
       </div>
       <div class="w-full">
-        <form action="{{ site.Params.contact_form_action }}" method="POST">
+        <form
+          action="{{ site.Params.contact_form_action }}"
+          method="POST"
+          name="contact"
+          data-netlify="true">
           <div class="mb-6">
             <label for="name" class="form-label">
               Name <span class="text-red-500">*</span>
@@ -50,6 +54,7 @@
               placeholder="What's on your mind?"
               rows="8"></textarea>
           </div>
+          <input type="hidden" name="form-name" value="contact" />
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
