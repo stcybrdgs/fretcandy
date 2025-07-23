@@ -1,0 +1,75 @@
+<!-- Title -->
+<title>{{ if .Title }}{{ .Title }} |{{ end }}{{ .Site.Title }}</title>
+
+<!-- Meta Description -->
+<meta
+  name="description"
+  content="{{ if .Description }}
+    {{ .Description }}
+  {{ else }}
+    {{ .Site.Params.description }}
+  {{ end }}
+  " />
+
+<!-- Meta Keywords -->
+<meta
+  name="keywords"
+  content="{{ if .Params.tags }}
+    {{ delimit .Params.tags ", " }}
+  {{ else }}
+    music, code, blog, FretTime, practice app
+  {{ end }}
+  " />
+
+<!-- Author -->
+<meta name="author" content="{{ .Site.Params.author }}" />
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ .Permalink }}" />
+<meta
+  property="og:title"
+  content="{{ if .Title }}{{ .Title }} |{{ end }}{{ .Site.Title }}" />
+<meta
+  property="og:description"
+  content="{{ if .Description }}
+    {{ .Description }}
+  {{ else }}
+    {{ .Site.Params.description }}
+  {{ end }}" />
+<meta
+  property="og:image"
+  content="{{ if .Params.image }}
+    {{ .Params.image | absURL }}
+  {{ else }}
+    {{ .Site.Params.default_image | absURL }}
+  {{ end }}
+  " />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content="{{ .Permalink }}" />
+<meta
+  name="twitter:title"
+  content="{{ if .Title }}{{ .Title }} |{{ end }}{{ .Site.Title }}" />
+<meta
+  name="twitter:description"
+  content="{{ if .Description }}
+    {{ .Description }}
+  {{ else }}
+    {{ .Site.Params.description }}
+  {{ end }}" />
+<meta
+  name="twitter:image"
+  content="{{ if .Params.image }}
+    {{ .Params.image | absURL }}
+  {{ else }}
+    {{ .Site.Params.default_image | absURL }}
+  {{ end }}" />
+<meta name="twitter:site" content="{{ .Site.Params.twitter_site }}" />
+<meta name="twitter:creator" content="{{ .Site.Params.twitter_site }}" />
+
+<!-- Open Graph Image Properties -->
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/jpeg" />
