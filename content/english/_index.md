@@ -2,7 +2,7 @@
 # Byline
 byline:
   title: "FretCandy --> Music + code, let's go! 🎸🚀"
-  content: "I'm a musician-developer building his way back into tech. This is my blog about music apps, building in public, and sharing the ride. Follow along for all the highs, lows, and weird ideas..."
+  content: "A blog about music apps, building in public, and sharing the ride. Written by a musician-developer building his way back into tech. Follow along for all the highs, lows, and weird ideas..."
 
 # Banner
 banner:
