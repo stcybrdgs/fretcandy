@@ -1,6 +1,7 @@
 ######################## default configuration ####################
 # The base URL of your site (required). This will be prepended to all relative URLs.
-baseURL = "/"
+baseURL = "https://fretcandy.com"
+description = "Music + code, let's go! A blog about music apps, building in public, and sharing the ride."
 # Title of your website (required).
 title = "FretCandy"
 # Your theme name
@@ -114,6 +115,8 @@ notAlternative = true
 
 
 ############################# Plugins ##############################
+
+
 # CSS Plugins
 [[params.plugins.css]]
 link = "plugins/swiper/swiper-bundle.css"
@@ -163,6 +166,10 @@ lazy = true
 ########################### Social Share ###########################
 # for configuring sharing buttons in your hugo.toml or config.toml[params]
 [params]
+  description = "Music + code, let's go! A blog about music apps, building in public, and sharing the ride. Follow along for all the highs, lows, and weird ideas."
+  default_image = "/images/fretcandy-og-image.jpg"  # Create a default image
+  author = "Stacy Bridges"
+
   enableSharingButtons = true
 
   [params.shareButtons]
