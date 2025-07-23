@@ -9,9 +9,11 @@
 <meta name="theme-name" content="hugoplate" />
 
 <!-- Open Graph Image -->
+
 <meta
   property="og:image"
-  content="{{ .Site.BaseURL }}/images/fretcandy-og-image.jpg" />
+  content="{{ .Site.BaseURL }}{{ .Site.Params.og_image }}" />
+/>
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
