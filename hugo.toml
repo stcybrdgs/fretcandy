@@ -166,15 +166,30 @@ lazy = true
 ########################### Social Share ###########################
 # for configuring sharing buttons in your hugo.toml or config.toml[params]
 [params]
+# Enhanced SEO parameters
   description = "Music + code, let's go! A blog about music apps, building in public, and sharing the ride. Written by a musician-developer building his way back into tech. Follow along for all the highs, lows, and weird ideas…"
-  default_image = "/images/fretcandy-og-image.jpg"  # Create a default image
+  default_image = "/images/fretcandy-og-image.png"
   author = "Stacy Bridges"
   twitter_site = "@stcybrdgs"
 
+  # Sharing buttons configuration
   enableSharingButtons = true
 
   [params.shareButtons]
-    networks = ["linkedin", "twitter", "facebook" ] # Customize as needed
+    networks = ["linkedin", "twitter", "facebook"] # Customize as needed
     size = "small"
     icon = "solid"
     # ...other options like sizes, icons... 
+
+    # Social media links for structured data
+  [[params.social]]
+    name = "twitter"
+    link = "https://x.com/stcybrdgs"
+  
+  [[params.social]]
+    name = "linkedin"
+    link = "https://www.linkedin.com/in/stcybrdgs/"
+  
+  [[params.social]]
+    name = "github"
+    link = "https://github.com/stcybrdgs"
