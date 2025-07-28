@@ -1,0 +1,11 @@
+# Allow all bots to crawl the entire site
+User-agent: *
+Allow: /
+
+# Allow Facebook's crawler
+User-agent: facebookexternalhit
+Allow: /
+
+# Allow Twitter's crawler
+User-agent: Twitterbot
+Allow: /
