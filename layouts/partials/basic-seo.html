@@ -54,29 +54,17 @@
     {{ .Description }}
   {{ else }}
     {{ .Site.Params.description }}
-  {{ end }}" />
-<meta
-  property="og:image"
-  content="{{ if .Params.image }}
-    {{ .Params.image | absURL }}
-  {{ else }}
-    {{ .Site.Params.default_image | absURL }}
   {{ end }}
   " />
 
 <!-- Open Graph Image Properties -->
+<!-- prettier-ignore -->
+<meta property="og:image" content="{{ if .Params.image }}{{ .Params.image | absURL }}{{ else }}{{ .Site.Params.default_image | absURL }}{{ end }}" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:type" content="image/png" />
-<meta
-  property="og:image:alt"
-  content="{{ if .IsHome }}
-    {{ .Site.Title }} -
-    {{ .Site.Params.description }}
-  {{ else }}
-    {{ .Title }}
-  {{ end }}
-  " />
+<!-- prettier-ignore -->
+<meta property="og:image:alt" content="{{ if .IsHome }}{{ .Site.Title }} - {{ .Site.Params.description }}{{ else }}{{ .Title }}{{ end }}" />
 
 {{ if $isArticle }}
   <!-- Article-specific Open Graph -->
