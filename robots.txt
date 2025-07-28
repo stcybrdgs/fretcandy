@@ -9,3 +9,7 @@ Allow: /
 # Allow Twitter's crawler
 User-agent: Twitterbot
 Allow: /
+
+# Allow LinkedIn's crawler
+User-agent: LinkedInBot
+Allow: /
