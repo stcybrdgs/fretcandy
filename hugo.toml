@@ -193,3 +193,14 @@ lazy = true
   [[params.social]]
     name = "github"
     link = "https://github.com/stcybrdgs"
+
+# added minify guideance to keep quotes for metadata attributes
+[minify]
+  minifyOutput = true
+  
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepQuotes = true
+      keepEndTags = true
+      keepDefaultAttrVals = true
+      keepWhitespace = false
