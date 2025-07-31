@@ -59,7 +59,12 @@
 
 <!-- Open Graph Image Properties -->
 <!-- prettier-ignore -->
-<meta property="og:image" content="{{ if .Params.image }}{{ .Params.image | absURL }}{{ else }}{{ .Site.Params.default_image | absURL }}{{ end }}" />
+<meta property="og:image" content="{{ if .Params.image }}{{ .Site.BaseURL }}{{ .Params.image }}{{ else }}{{ .Site.BaseURL }}{{ .Site.Params.default_image }}{{ end }}" />
+<!-- <meta property="og:image" content="{{ if .Params.image }}
+  {{ .Params.image | absURL }}
+{{ else }}
+  {{ .Site.Params.default_image | absURL }}
+{{ end }}" /> -->
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:type" content="image/png" />
