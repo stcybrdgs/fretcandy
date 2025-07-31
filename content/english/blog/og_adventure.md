@@ -115,7 +115,7 @@ export const metadata: Metadata = {
 
 **The Image Challenge** – I found that creating effective Open Graph images is also crucial. The standard size is 1200x630 pixels, and the image needs to look good at thumbnail size while clearly representing the brand. I used Canva to create custom-sized, pixel-dense designs for both FretTime and FretCandy.
 
-**Pro Tip:** Don't forget your Twitter Card tag (`twitter:card`)! While many platforms read Open Graph tags, Twitter prefers its own `twitter:card` metadata for optimal display. That being said, once I got my tags set up, including the `twitter:card` tag, I found that my og image still won't show up on X.
+**Pro Tip:** Don't forget your Twitter Card tag (`twitter:card`)! While many platforms read Open Graph tags, Twitter prefers its own `twitter:card` metadata for optimal display. That being said, once I got my tags set up, including the `twitter:card` tag, I found that my OG image still won't show up on X.
 
 ## Test Your Tags
 
