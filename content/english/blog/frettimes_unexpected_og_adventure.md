@@ -111,28 +111,30 @@ export const metadata: Metadata = {
 };
 ```
 
-**For Hugo Sites** (like FretCandy), it can be more involved. In my case, I needed to update my `head` partial, create a `basic-seo` partial, and configure my `hugo.toml`. The Hugo approach definitely required more template logic, but it gave me fine-grained control over the different content types.
+**For Hugo Sites** (like FretCandy), it can be more involved. In my case, I needed to update my `head` partial, create a `basic-seo` partial, and configure my `hugo.toml`. The Hugo approach definitely required more template logic, but it seemed to give me fine-grained control over the different content types. But what a pain! To be honest, it gave me another reason to hate Hugo.
 
 **The Image Challenge** – I found that creating effective Open Graph images is also crucial. The standard size is 1200x630 pixels, and the image needs to look good at thumbnail size while clearly representing the brand. I used Canva to create custom-sized, pixel-dense designs for both FretTime and FretCandy.
 
-**Pro Tip:** Don't forget Twitter Card tags! While many platforms read Open Graph tags, Twitter prefers its own `twitter:card` metadata for optimal display.
+**Pro Tip:** Don't forget your Twitter Card tag (`twitter:card`)! While many platforms read Open Graph tags, Twitter prefers its own `twitter:card` metadata for optimal display. That being said, once I got my tags set up, including the `twitter:card` tag, I found that my og image still won't show up on X.
 
-## Testing Your Tags
+## Test Your Tags
 
-Here's where I learned the hard way that implementation is only half the battle. Testing is everything.
+So, here's where I learned the hard way that implementation is only half the battle. Testing is everything.
 
-**LinkedIn Post Inspector** (https://www.linkedin.com/post-inspector/) – The most finicky of the bunch. LinkedIn caches aggressively, so changes can take time to appear.
+**LinkedIn Post Inspector** (https://www.linkedin.com/post-inspector/) – The most finicky of the bunch? LinkedIn caches aggressively, so changes can take time to appear.
 
-**Twitter Card Validator** (https://cards-dev.twitter.com/validator) – Clean interface, fast updates, helpful error messages.
+**Twitter Card Validator** (https://cards-dev.twitter.com/validator) – Clean interface, fast updates, helpful error messages... but where did the preview go? I found out that everything can look right on the validator (all green with no fails), but the images may still not show up in an X post, or they may show after significant latency.
 
 **Facebook Sharing Debugger** (https://developers.facebook.com/tools/debug/) – Great for debugging what Facebook's crawler actually sees.
 
-Each platform has its quirks. LinkedIn was particularly stubborn, requiring me to add a `robots.txt` file because Netlify was blocking their crawler by default:
+Each platform has its quirks, but so might the hosting platform. For instance, LinkedIn seemed particularly stubborn at first, but the primary reason was that Netlify was blocking their site crawler by default, which required me to add a `robots.txt` file:
 
 ```
 User-agent: LinkedInBot
 Allow: /
 ```
+
+Another quirk of the Netlify platform is that it may apply minification by default to your site as part of its build post-processing. The problem for metadata is that the minification can actually cause quotes to get stripped from metadata attributes. (In my case, my initial Hugo setup for FretCandy included minification as part of the seminal build script, which was causing the quote stripping I mentioned. As a result, I had to manually remove minification from my `package.json` build script).
 
 **Testing tip:** Clear cache and test from different devices. What works on desktop might not work on mobile, and cached results can hide real problems.
 
@@ -179,11 +181,11 @@ The result? Nice preview cards across all platforms, and professional-looking sh
 
 ## Back on Track
 
-So, now both **FretTime** and **FretCandy** are generating nice social media cards. LinkedIn recognizes them instantly. Twitter (X) shows rich previews. Facebook pulls the right images and descriptions.
+So, now both **FretTime** and **FretCandy** are setup to generate nice social media cards. LinkedIn recognizes them instantly. Twitter (X) likes the descriptions but bails on the previews. Facebook pulls the right images and descriptions. After a bunch of updates and dumpster diving, it still seems to be a mixed bag.
 
 Was this the analytics dashboard I planned to build this week? Definitely not. Was it time well spent? Yep.
 
-**Phase 2 is officially back on track and social-media ready**, with proper Open Graph metadata as an unexpected but valuable addition to the overall project setup.
+**Phase 2 is officially back on track and social-media ready** (or perhaps I should say "readier") with proper Open Graph metadata as an unexpected but valuable addition to the overall project setup.
 
 **_`Music + code, let's go!`_** 🎸🚀
 
