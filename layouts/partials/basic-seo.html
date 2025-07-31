@@ -117,8 +117,13 @@
 {{- else -}}
   {{ .Site.Params.default_image | absURL }}
 {{- end -}}" /> -->
+<!-- <meta name="twitter:image" content="{{ if .Params.image }}
+  {{ .Params.image | absURL }}
+{{ else }}
+  {{ .Site.Params.default_image | absURL }}
+{{ end }}" /> -->
 <!-- prettier-ignore -->
-<meta name="twitter:image" content="{{ if .Params.image }}{{ .Params.image | absURL }}{{ else }}{{ .Site.Params.default_image | absURL }}{{ end }}" />
+<meta name="twitter:image" content="{{ .Site.BaseURL | strings.TrimSuffix "/" }}{{ .Site.Params.default_image }}" />
 <meta name="twitter:site" content="{{ .Site.Params.twitter_site }}" />
 <meta name="twitter:creator" content="{{ .Site.Params.twitter_site }}" />
 
