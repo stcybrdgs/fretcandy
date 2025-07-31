@@ -3,7 +3,7 @@ title: "FretTime: Phase 2 Kickoff"
 meta_title: ""
 description: "An article about the FretTime - Phase 2 kickoff."
 date: 2025-07-20T05:00:00Z
-image: "/images/fret-time-phase1-live.png"
+image: "images/fret-time-phase1-live.png"
 # categories: ["Frettime", "Phase 2"]
 author: "Stacy Bridges"
 tags: ["frettime", "kickoff", "phase 2", "todo app"]

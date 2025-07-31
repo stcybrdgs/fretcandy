@@ -3,7 +3,7 @@ title: "FretTime's Unexpected Open-Graph Adventure"
 meta_title: ""
 description: "How a simple LinkedIn post derailed Phase 2 development and taught me why Open Graph metadata should be part of every project's initial setup."
 date: 2025-07-31T05:00:00Z
-image: "/images/unexpected_og_adventure.png"
+image: "images/unexpected_og_adventure.png"
 categories: ["Frettime", "Web Development"]
 author: "Stacy Bridges"
 tags:
